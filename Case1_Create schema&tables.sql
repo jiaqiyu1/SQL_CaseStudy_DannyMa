@@ -147,4 +147,36 @@ WHERE RowNumberEachCustomer = 1;
 
 ----------------------------------------------------------------------------------
 
---4. 
+--4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+
+-- create temp table sales left join menu #temp_sales_menu 
+
+DROP TABLE IF EXISTS #temp_sales_menu 
+
+SELECT 
+	s.customer_id, 
+	m.product_name,
+	s.order_date
+	INTO #temp_sales_menu
+
+FROM [dbo].[sales] s
+	LEFT JOIN [dbo].[menu] m
+		ON s.product_id = m.product_id
+
+
+-- create temp table #order_times
+DROP TABLE IF EXISTS #order_times
+
+SELECT *,
+COUNT(product_name) OVER (PARTITION BY product_name) AS total_ordered_times_each_product
+	INTO #order_times
+FROM #temp_sales_menu
+
+-- pick up the max order_times by subquery 
+SELECT DISTINCT product_name,total_ordered_times_each_product
+FROM #order_times
+WHERE total_ordered_times_each_product IN 
+	(SELECT 
+		MAX(total_ordered_times_each_product)
+	FROM #order_times)
+
