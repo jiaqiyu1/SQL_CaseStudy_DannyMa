@@ -358,3 +358,40 @@ FROM #total_times_amount
 
 
 ---------------------------------------------------
+
+-- 9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
+
+--create a temp table to calculate ponts from 3 merged table (LEFT JOIN)
+
+DROP TABLE IF EXISTS #points
+
+SELECT 
+*,
+	CASE
+	WHEN product_name ='sushi'THEN price*20
+	ELSE price*10
+	END AS calculated_points
+INTO #points
+FROM 
+(    SELECT 
+		s.customer_id, 
+		s.order_date,
+		s.product_id,
+		m.product_name,
+		m.price, 
+		mem.join_date
+    FROM [dbo].[sales] s
+    LEFT JOIN  [dbo].[menu] m ON s.product_id = m.product_id
+    LEFT JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
+)	AS smm
+
+
+--summarize data
+SELECT 
+customer_id,
+SUM(calculated_points)
+FROM #points
+GROUP BY customer_id
+
+----------------------------------------------------------------------
