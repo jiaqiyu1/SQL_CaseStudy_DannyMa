@@ -135,7 +135,7 @@ WITH fetch_rows AS
 			m.product_name,
 			s.order_date
 		FROM [dbo].[sales] s
-			LEFT JOIN [dbo].[menu] m
+			INNER JOIN [dbo].[menu] m
 				ON s.product_id = m.product_id
 
 		) AS sales_menu
@@ -160,7 +160,7 @@ SELECT
 	INTO #temp_sales_menu
 
 FROM [dbo].[sales] s
-	LEFT JOIN [dbo].[menu] m
+	INNER JOIN [dbo].[menu] m
 		ON s.product_id = m.product_id
 
 
@@ -244,8 +244,8 @@ WITH CTE_sales_member_menu AS
 		m.price, 
 		mem.join_date
     FROM [dbo].[sales] s
-    LEFT JOIN  [dbo].[menu] m ON s.product_id = m.product_id
-    LEFT JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
+    INNER JOIN  [dbo].[menu] m ON s.product_id = m.product_id
+    INNER JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
 )	
 
 --create rownumber 
