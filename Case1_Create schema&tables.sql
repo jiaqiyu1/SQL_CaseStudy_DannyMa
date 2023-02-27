@@ -313,3 +313,48 @@ FROM #rownumbertable2
 
 -------------------------------------------------------------------------
 
+-- 8. What is the total items and amount spent for each member before they became a member?
+
+-- create a temp table to combine 3 tables
+
+DROP TABLE IF EXISTS #sales_member_menu
+SELECT 
+	s.customer_id, 
+	s.order_date,
+	s.product_id,
+	m.product_name,
+	m.price, 
+	mem.join_date
+INTO #sales_member_menu
+FROM [dbo].[sales] s
+INNER JOIN  [dbo].[menu] m ON s.product_id = m.product_id
+INNER JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
+
+select*FROM #sales_member_menu
+
+
+--creat a temp table for total_ordered_times & total_amount
+
+DROP TABLE IF EXISTS #total_times_amount
+
+SELECT 
+	customer_id,
+    product_name,
+    price,
+COUNT(product_name) OVER (PARTITION BY customer_id) AS total_ordered_times,
+SUM(COUNT(product_name)*price) OVER (PARTITION BY customer_id) AS total_amount
+INTO #total_times_amount
+
+FROM #sales_member_menu
+WHERE order_date < join_date
+GROUP BY customer_id,product_name,price
+
+--show the final result
+SELECT 
+DISTINCT customer_id,
+total_ordered_times,
+total_amount
+FROM #total_times_amount
+
+
+---------------------------------------------------
