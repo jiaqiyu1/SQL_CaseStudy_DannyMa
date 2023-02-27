@@ -229,3 +229,42 @@ FROM #favourite_table
 WHERE 
 	(rownumber = 1 AND customer_id IN ('A','C') )
 	OR customer_id = 'B'
+
+-----------------------------------------------------------------------------
+-- 6. Which item was purchased first by the customer after they became a member?
+
+--create CTE to combine 3 tables
+WITH CTE_sales_member_menu AS 
+(
+    SELECT 
+		s.customer_id, 
+		s.order_date,
+		s.product_id,
+		m.product_name,
+		m.price, 
+		mem.join_date
+    FROM [dbo].[sales] s
+    LEFT JOIN  [dbo].[menu] m ON s.product_id = m.product_id
+    LEFT JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
+)	
+
+--create rownumber 
+
+SELECT 
+	customer_id,
+	join_date,
+	order_date,
+	product_name,
+	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS rownumber
+	INTO #rownumbertable
+FROM CTE_sales_member_menu
+WHERE order_date >= join_date
+
+-- rownumber =1 
+SELECT 
+	customer_id,
+	product_name
+FROM #rownumbertable
+WHERE rownumber = 1
+
+------------------------------------------------------------------
