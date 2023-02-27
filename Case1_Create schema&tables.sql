@@ -179,4 +179,53 @@ WHERE total_ordered_times_each_product IN
 	(SELECT 
 		MAX(total_ordered_times_each_product)
 	FROM #order_times)
+----------------------------------------------------------------------------------
+-- 5. Which item was the most popular for each customer?
 
+--create a temp table for how many times of each product had been ordered by each customer
+DROP TABLE IF EXISTS  #order_times_each_customer_table
+
+SELECT *,
+COUNT(product_name) OVER (PARTITION BY customer_id, product_name) AS ordered_times_each_customer
+	INTO #order_times_each_customer_table
+FROM #temp_sales_menu;
+
+SELECT *
+FROM #order_times_each_customer_table
+
+--create a temp table for the largest ordered product by each customer 
+
+DROP TABLE IF EXISTS #max_ordered_table
+
+SELECT
+	customer_id, 
+	product_name, 
+	MAX(ordered_times_each_customer) AS max_ordered_times_each_customer
+
+	INTO #max_ordered_table
+
+	FROM #order_times_each_customer_table
+	GROUP BY customer_id, product_name
+	ORDER BY customer_id, max_ordered_times_each_customer DESC
+--create a tmep table for get rownumber 
+
+DROP TABLE IF EXISTS #favourite_table
+
+SELECT 
+	customer_id,
+	product_name,
+	max_ordered_times_each_customer,
+	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY customer_id DESC) AS rownumber
+
+	INTO #favourite_table
+
+FROM #max_ordered_table
+	
+
+SELECT 
+	customer_id,
+	product_name
+FROM #favourite_table
+WHERE 
+	(rownumber = 1 AND customer_id IN ('A','C') )
+	OR customer_id = 'B'
