@@ -390,7 +390,7 @@ FROM
 --summarize data
 SELECT 
 customer_id,
-SUM(calculated_points)
+SUM(calculated_points) AS total_points
 FROM #points
 GROUP BY customer_id
 
