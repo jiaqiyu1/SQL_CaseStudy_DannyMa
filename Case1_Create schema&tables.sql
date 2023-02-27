@@ -268,3 +268,48 @@ FROM #rownumbertable
 WHERE rownumber = 1
 
 ------------------------------------------------------------------
+
+-- 7. Which item was purchased just before the customer became a member?
+
+-- create a temp table to combine 3 tables
+
+DROP TABLE IF EXISTS #sales_member_menu
+SELECT 
+	s.customer_id, 
+	s.order_date,
+	s.product_id,
+	m.product_name,
+	m.price, 
+	mem.join_date
+INTO #sales_member_menu
+FROM [dbo].[sales] s
+INNER JOIN  [dbo].[menu] m ON s.product_id = m.product_id
+INNER JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
+
+
+-- create a temp table for rownumber
+
+DROP TABLE IF EXISTS #rownumbertable2;
+
+SELECT 
+	customer_id,
+	join_date,
+	order_date,
+	product_name,
+	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rownumber
+INTO #rownumbertable2
+FROM #sales_member_menu
+WHERE order_date IN (
+	SELECT DATEADD(DAY, -2, join_date)
+	FROM #sales_member_menu
+	UNION 
+	SELECT join_date
+	FROM #sales_member_menu
+);
+
+select 
+product_name
+FROM #rownumbertable2
+
+-------------------------------------------------------------------------
+
