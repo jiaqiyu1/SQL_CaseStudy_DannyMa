@@ -79,26 +79,14 @@ VALUES
 --------------------------------------------------------------------------------------------------------------
 -- 1. What is the total amount each customer spent at the restaurant?
 
+SELECT 
+	sales.customer_id,
+	SUM(menu.price) AS total_amount
+FROM [dbo].[sales] sales
+	INNER JOIN [dbo].[menu] menu
+		ON sales.product_id = menu.product_id
+GROUP BY sales.customer_id
 
--- create a subquery at first and name it 'sub'
--- use created subquery INNER JOIN sales table 
-
-SELECT s.customer_id,SUM(sub.TotalSalesAmount) AS total_salesamount
-FROM (
-	SELECT 
-		s.customer_id, 
-		m.price, 
-		COUNT(s.order_date) AS quantity,
-		m.price* COUNT(s.order_date) AS TotalSalesAmount
-	FROM dbo.sales s
-	INNER JOIN dbo.menu m
-	ON s.product_id = m.product_id
-	GROUP BY customer_id,m.price
-	) sub
-
-INNER JOIN dbo.sales s
-ON sub.customer_id = s.customer_id
-GROUP BY s.customer_id
 
 ------------------------------------------------------------------------
 -- 2. How many days has each customer visited the restaurant?
@@ -110,13 +98,8 @@ GROUP BY s.customer_id
 SELECT 
 customer_id,
 COUNT(DISTINCT(CAST(MONTH(order_date) AS VARCHAR)+CAST(DAY(order_date) AS VARCHAR))) AS times
-FROM dbo.sales
+FROM [dbo].[sales]
 GROUP BY customer_id
-
-SELECT *
-FROM dbo.sales s
-INNER JOIN dbo.menu m
-ON s.product_id = m.product_id
 
 ---------------------------------------------------------------------------------
 -- 3. What was the first item from the menu purchased by each customer?
@@ -124,7 +107,7 @@ ON s.product_id = m.product_id
 WITH fetch_rows AS
 (
 	SELECT *,
-	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS RowNumberEachCustomer
+	RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS order_rank
 	FROM 
 		(SELECT 
 			s.customer_id, 
@@ -137,16 +120,18 @@ WITH fetch_rows AS
 		) AS sales_menu
 )
 
-SELECT customer_id,product_name
+SELECT DISTINCT customer_id,product_name
 FROM fetch_rows
-WHERE RowNumberEachCustomer = 1;
+WHERE order_rank= 1;
+
 
 -----------------------------------------------------------------------------------
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
+--Solution 1
 
--- create temp table sales left join menu #temp_sales_menu 
+-- create temp table sales inner join menu #temp_sales_menu 
 
 DROP TABLE IF EXISTS #temp_sales_menu 
 
@@ -178,64 +163,67 @@ WHERE total_ordered_times_each_product IN
 	FROM #order_times)
 
 
+
+-- Solution2 ( more concise) 
+SELECT
+	TOP 1 -- just pick up the first row 
+	menu.product_name,
+	COUNT(*) AS total_purchases -- calculate all rows of a table
+FROM [dbo].[sales] sales
+	INNER JOIN [dbo].[menu] menu
+		ON sales.product_id = menu.product_id
+GROUP BY menu.product_name
+ORDER BY total_purchases DESC
+
+
+
 -------------------------------------------------------------------------------
 
 -- 5. Which item was the most popular for each customer?
 
---create a temp table for how many times of each product had been ordered by each customer
-DROP TABLE IF EXISTS  #order_times_each_customer_table
 
-SELECT *,
-COUNT(product_name) OVER (PARTITION BY customer_id, product_name) AS ordered_times_each_customer
-	INTO #order_times_each_customer_table
-FROM #temp_sales_menu;
+-- Create a temporary table to store the item counts for each customer and product combination
 
-SELECT *
-FROM #order_times_each_customer_table
+DROP TABLE IF EXISTS #customer_items
+SELECT
+  sales.customer_id,
+  menu.product_name,
+  COUNT(*) AS item_quantity
+INTO #customer_items
+FROM [dbo].[sales] sales
+INNER JOIN [dbo].[menu] menu
+  ON sales.product_id = menu.product_id
+GROUP BY sales.customer_id, menu.product_name;
 
---create a temp table for the largest ordered product by each customer 
+-- Create a temporary table to store the ranked items for each customer
 
-DROP TABLE IF EXISTS #max_ordered_table
+DROP TABLE IF EXISTS #ranked_customer_items
 
 SELECT
-	customer_id, 
-	product_name, 
-	MAX(ordered_times_each_customer) AS max_ordered_times_each_customer
+  customer_id,
+  product_name,
+  item_quantity,
+  RANK() OVER (
+    PARTITION BY customer_id
+    ORDER BY item_quantity DESC
+  ) AS item_rank
+INTO #ranked_customer_items
+FROM #customer_items;
 
-	INTO #max_ordered_table
+-- Select the top-ranked item for each customer
 
-	FROM #order_times_each_customer_table
-	GROUP BY customer_id, product_name
-	ORDER BY customer_id, max_ordered_times_each_customer DESC
+SELECT
+  customer_id,
+  product_name,
+  item_quantity
+FROM #ranked_customer_items
+WHERE item_rank = 1;
 
-SELECT*
-FROM #max_ordered_table
 
---create a tmep table for get rownumber 
-
-DROP TABLE IF EXISTS #favourite_table
-
-SELECT 
-	customer_id,
-	product_name,
-	max_ordered_times_each_customer,
-	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY customer_id DESC) AS rownumber
-
-	INTO #favourite_table
-
-FROM #max_ordered_table
-	
-
-SELECT 
-	customer_id,
-	product_name
-FROM #favourite_table
-WHERE 
-	(rownumber = 1 AND customer_id IN ('A','C') )
-	OR customer_id = 'B'
 
 --------------------------------------------------------------
 -- 6. Which item was purchased first by the customer after they became a member?
+	--and what date was it? (including the date they joined)
 
 --create rownumber 
 
@@ -249,34 +237,19 @@ SELECT
 	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS rownumber
 	INTO #rownumbertable
 FROM #sales_member_menu
-WHERE order_date > join_date
+WHERE order_date >= join_date
 
 -- rownumber =1 
 SELECT 
 	customer_id,
+	order_date,
 	product_name
 FROM #rownumbertable
 WHERE rownumber = 1
 
 -----------------------------------------------------------
 
--- 7. Which item was purchased just before the customer became a member?
-
--- create a temp table to combine 3 tables
-
-DROP TABLE IF EXISTS #sales_member_menu
-SELECT 
-	s.customer_id, 
-	s.order_date,
-	s.product_id,
-	m.product_name,
-	m.price, 
-	mem.join_date
-INTO #sales_member_menu
-FROM [dbo].[sales] s
-INNER JOIN  [dbo].[menu] m ON s.product_id = m.product_id
-INNER JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
-
+-- 7. Which item(s) was purchased just before the customer became a member and when?
 
 -- create a temp table for rownumber
 
@@ -287,34 +260,21 @@ SELECT
 	join_date,
 	order_date,
 	product_name,
-	ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rownumber
+	RANK() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS order_rank
 INTO #rownumbertable2
 FROM #sales_member_menu
-WHERE order_date BETWEEN DATEADD(DAY, -2, join_date) AND join_date
+WHERE order_date < join_date
 
+select * from #rownumbertable2
 
 select 
+customer_id,
+order_date,
 product_name
 FROM #rownumbertable2
+WHERE order_rank =1
 
 -- 8. What is the total items and amount spent for each member before they became a member?
-
--- create a temp table to combine 3 tables
-
-DROP TABLE IF EXISTS #sales_member_menu
-SELECT 
-	s.customer_id, 
-	s.order_date,
-	s.product_id,
-	m.product_name,
-	m.price, 
-	mem.join_date
-INTO #sales_member_menu
-FROM [dbo].[sales] s
-INNER JOIN  [dbo].[menu] m ON s.product_id = m.product_id
-INNER JOIN [dbo].[members] mem ON mem.customer_id = s.customer_id
-
-select*FROM #sales_member_menu
 
 
 --creat a temp table for total_ordered_times & total_amount
@@ -377,6 +337,7 @@ customer_id,
 SUM(calculated_points) AS total_points
 FROM #points
 GROUP BY customer_id
+ORDER BY total_points DESC
 
 ------------------------------------------------------------
 
@@ -384,49 +345,31 @@ GROUP BY customer_id
 --     they earn 2x points on all items, not just sushi
 --     how many points do customer A and B have at the end of January?
 
+WITH member_info AS (
+    SELECT 
+        sales.customer_id,
+        order_date,
+        join_date,
+        product_name,
+        price,
+        CASE
+			WHEN product_name = 'sushi' THEN 2
+            WHEN order_date BETWEEN join_date AND DATEADD(DAY, 6, join_date) THEN 2
+            ELSE 1
+        END AS point_multiplier
+    FROM sales
+    INNER JOIN menu
+        ON sales.product_id = menu.product_id
+    INNER JOIN members
+        ON sales.customer_id = members.customer_id
+    WHERE order_date <= EOMONTH('2021-01-31')
+)
 
--- create a temp table for 2x points
-
-DROP TABLE IF EXISTS #2xpoints
-
-SELECT 
-customer_id,
-SUM(price*20) AS points
-
-INTO #2xpoints
-
-FROM #sales_member_menu
-WHERE order_date BETWEEN 
-        join_date
-        AND
-		DATEADD(DAY,7,join_date) 
-GROUP BY customer_id
-
-
--- create a temp table for 1x points
-
-DROP TABLE IF EXISTS #1xpoints
-
-SELECT 
-customer_id,
-SUM(price*10) AS points
-
-INTO #1xpoints
-
-FROM #sales_member_menu
-WHERE order_date BETWEEN DATEADD(DAY,7,join_date) AND '2021-01-31'
-GROUP BY customer_id
-
-
--- union two 2 scenarios
 SELECT 
     customer_id,
-    SUM(points) AS total_points
-FROM (
-    SELECT customer_id, points FROM #2xpoints
-    UNION ALL
-    SELECT customer_id, points FROM #1xpoints
-) AS points_table
-GROUP BY customer_id
-ORDER BY customer_id;
+    SUM(price * 10 * point_multiplier) AS points 
+FROM member_info
+GROUP BY customer_id;
+
+
 
