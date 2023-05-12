@@ -4,9 +4,9 @@
 </p>
 
 ## 📕 Table Of Contents
-* 🛠️ [Problem Statement](#problem-statement)
-* 📂 [Dataset](#dataset)
-* 🚀 [Questions and Solutions](#queations-and-solutions)
+* 🛠️ [Problem Statement](#-problem-statement)
+* 📂 [Dataset](#-dataset)
+* 🚀 [Questions and Solutions](#-questions-and-solutions)
 ---
 
 ## 🛠️ Problem Statement
