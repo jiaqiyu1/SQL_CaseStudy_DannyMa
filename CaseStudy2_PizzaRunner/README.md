@@ -1,6 +1,7 @@
 # 🍕 Case Study #2 - Pizza Runner
 <p align="center">
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width=40% height=40%>
+</p>
 
 ## 📕 Table Of Contents
   - 🛠️ [Problem Statement](#-problem-statement)
