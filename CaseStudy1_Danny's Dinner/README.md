@@ -1,6 +1,6 @@
 # 🍜 Case Study #1 - Danny's Dinner
 <p align="center">
-<img width="289" alt="Screen Shot 2023-05-12 at 3 36 58 PM" src="https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/assets/84236678/89871928-003b-40a1-8a70-6cc4a57ef3af">
+<img width="289" alt="Screen Shot 2023-05-12 at 3 36 58 PM" src="https://8weeksqlchallenge.com/images/case-study-designs/1.png">
 </p>
 
 ## 📕 Table Of Contents
