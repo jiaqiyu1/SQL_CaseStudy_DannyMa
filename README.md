@@ -28,7 +28,7 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 
 ## 🍕 Case Study #2 - Pizza Runner
 <p align="center">
-  <img width=40% height=40%" src="/IMG/2.png">
+  <img width=40% height=40%" src="https://8weeksqlchallenge.com/images/case-study-designs/2.png">
 
 Danny was scrolling through his Instagram feed when something really caught his eye - “80s Retro Styling and Pizza Is The Future!”
 
@@ -39,54 +39,7 @@ Danny started by recruiting “runners” to deliver fresh pizza from Pizza Runn
 ### View full case study introduction [here](https://8weeksqlchallenge.com/case-study-2/).
 
 
-[![View Data Exploration Folder](https://img.shields.io/badge/View-Solution_Case_Study_2-971901?style=for-the-badge&logo=GITHUB)](/Case%20Study%20%232%20-%20Pizza%20Runner)
+[![View Data Exploration Folder](https://img.shields.io/badge/View-Solution_Case_Study_2-971901?style=for-the-badge&logo=GITHUB)](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/tree/main/CaseStudy2_PizzaRunner)
 
 ---
-
-## 🥑 Case Study #3 - Foodie-Fi
-<p align="center">
-  <img width=40% height=40%" src="/IMG/3.png">
-
-Subscription based businesses are super popular and Danny realised that there was a large gap in the market - he wanted to create a new streaming service that only had food related content - something like Netflix but with only cooking shows!
-
-Danny finds a few smart friends to launch his new startup Foodie-Fi in 2020 and started selling monthly and annual subscriptions, giving their customers unlimited on-demand access to exclusive food videos from around the world!
-
-Danny created Foodie-Fi with a data driven mindset and wanted to ensure all future investment decisions and new features were decided using data. This case study focuses on using subscription style digital data to answer important business questions.
-
-### View full case study introduction [here](https://8weeksqlchallenge.com/case-study-3/).
-
-[![View Data Exploration Folder](https://img.shields.io/badge/View-Solution_Case_Study_3-971901?style=for-the-badge&logo=GITHUB)](/Case%20Study%20%233%20-%20Foodie-Fi)
-
----
-
-## 🪙 Case Study #4 - Data Bank
-<p align="center">
-  <img width=40% height=40%" src="/IMG/4.png">
-
-There is a new innovation in the financial industry called Neo-Banks: new aged digital only banks without physical branches.
-
-Danny thought that there should be some sort of intersection between these new age banks, cryptocurrency and the data world…so he decides to launch a new initiative - Data Bank!
-
-...
-
-The management team at Data Bank want to increase their total customer base - but also need some help tracking just how much data storage their customers will need.
-
-This case study is all about calculating metrics, growth and helping the business analyse their data in a smart way to better forecast and plan for their future developments!
-
-### View full case study introduction [here](https://8weeksqlchallenge.com/case-study-4/).
-
-[![View Data Exploration Folder](https://img.shields.io/badge/View-Solution_Case_Study_4-971901?style=for-the-badge&logo=GITHUB)](/Case%20Study%20%234%20-%20Data%20Bank)
-
----
-
-## ✨ Contribution
-
-Contributions, issues, and feature requests are welcome!
-
-To contribute to this project, see the GitHub documentation on **[creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)**.
-
----
-
-
-___________________________________
 
