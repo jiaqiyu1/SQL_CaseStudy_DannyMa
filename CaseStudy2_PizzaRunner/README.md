@@ -8,6 +8,30 @@
   - ♻️ [Data Cleansing](#️-data-cleansing)
   - 🚀 [Solutions](#-solutions)
 
+  ## 📕 Table Of Contents
+  - 🛠️ [Problem Statement](#problem-statement)
+  - 📂 [Dataset](#dataset)
+  - ♻️ [Data Cleansing](#data-cleansing)
+  - 🚀 [Solutions](#solutions)
+
+## 🛠️ Problem Statement {#problem-statement}
+
+...
+
+## 📂 Dataset {#dataset}
+
+...
+
+## ♻️ Data Cleansing {#data-cleansing}
+
+...
+
+## 🚀 Solutions {#solutions}
+
+...
+
+  
+  
 ---
 
 ## 🛠️ Problem Statement
