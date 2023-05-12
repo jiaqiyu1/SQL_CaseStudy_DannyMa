@@ -98,7 +98,7 @@ The final members table captures the ```join_date``` when a ```customer_id``` jo
  <br /> 
 
 ## 🚀 Solutions
-Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/Case%20Study%231_Solution_Danny's%20Dinner.sql) to see my solutions ! 
+Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy1_Danny's%20Dinner/Solution_Sql.sql) to see my solutions ! 
 
 
 
