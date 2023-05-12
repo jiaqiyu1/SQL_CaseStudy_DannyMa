@@ -3,34 +3,11 @@
 <img src="https://github.com/ndleah/8-Week-SQL-Challenge/blob/main/IMG/org-2.png" width=40% height=40%>
 
 ## 📕 Table Of Contents
-  - 🛠️ [Problem Statement](#problem-statement)
-  - 📂 [Dataset](#dataset)
+  - 🛠️ [Problem Statement](#-problem-statement)
+  - 📂 [Dataset](#-dataset)
   - ♻️ [Data Cleansing](#️-data-cleansing)
   - 🚀 [Solutions](#-solutions)
 
-  ## 📕 Table Of Contents
-  - 🛠️ [Problem Statement](#problem-statement)
-  - 📂 [Dataset](#dataset)
-  - ♻️ [Data Cleansing](#data-cleansing)
-  - 🚀 [Solutions](#solutions)
-
-## 🛠️ Problem Statement {#problem-statement}
-
-...
-
-## 📂 Dataset {#dataset}
-
-...
-
-## ♻️ Data Cleansing {#data-cleansing}
-
-...
-
-## 🚀 Solutions {#solutions}
-
-...
-
-  
   
 ---
 
