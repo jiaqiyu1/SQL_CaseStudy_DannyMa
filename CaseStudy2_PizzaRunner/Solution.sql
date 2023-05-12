@@ -58,13 +58,3 @@ INNER JOIN [dbo].[pizza_names] pizza
 	ON customer.pizza_id = pizza.pizza_id
 --GROUP BY customer.customer_id, 	pizza.pizza_name
 
-
-
-
-
-
-6. What was the maximum number of pizzas delivered in a single order?
-7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
-8. How many pizzas were delivered that had both exclusions and extras?
-9. What was the total volume of pizzas ordered for each hour of the day?
-10. What was the volume of orders for each day of the week?
