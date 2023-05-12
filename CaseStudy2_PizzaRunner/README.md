@@ -163,7 +163,7 @@ This table contains all of the **```topping_name```** values with their correspo
 
 ## ♻️ Data Cleansing
 
-[Click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/DataCleansing.sql) to see the solutions for data cleansing ! 
+Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/DataCleansing.sql) to see the solutions for data cleansing ! 
 
 ---
 
