@@ -6,7 +6,7 @@
   - 🛠️ [Problem Statement](#-problem-statement)
   - 📂 [Dataset](#-dataset)
   - ♻️ [Data Cleansing](#️-data-cleansing)
-  - 🚀 [Solutions](#-solutions)
+  - 🚀 [Queations and Solutions](#-questions-and-solutions)
 
   
 ---
@@ -163,11 +163,11 @@ This table contains all of the **```topping_name```** values with their correspo
 
 ## ♻️ Data Cleansing
 
-[Click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/DataCleansing.sql) to see the solution for data cleansing ! 
+[Click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/DataCleansing.sql) to see the solutions for data cleansing ! 
 
 ---
 
-## 🚀 Solutions
+## 🚀 Questions and Solutions
 
-[Click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/Solution.sql) to see the solutions for the questions ! 
+Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/Solution.sql) to see questions and solutions ! 
 
