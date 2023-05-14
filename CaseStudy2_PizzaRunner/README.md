@@ -168,6 +168,11 @@ This table contains all of the **```topping_name```** values with their correspo
 
 ---
 
+## 🔰 Entity Relationship Diagram
+![w](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/assets/84236678/f922f82c-affb-4c5f-9d89-757d31adde0f)
+Powered by [dbdiagram.io](https://dbdiagram.io/d/5f3e085ccf48a141ff558487/?utm_source=dbdiagram_embed&utm_medium=bottom_open)
+
+
 ## ♻️ Data Cleansing
 
 Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy2_PizzaRunner/DataCleansing.sql) to see the solutions for data cleansing ! 
