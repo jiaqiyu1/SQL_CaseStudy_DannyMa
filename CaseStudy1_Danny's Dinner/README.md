@@ -89,6 +89,13 @@ The final members table captures the ```join_date``` when a ```customer_id``` jo
 
 
 
+## Entity Relationship Diagram
+![q](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/assets/84236678/506062bd-b594-44ff-94db-3a8487f41423)
+
+Powered by [dbdiagram.io](https://dbdiagram.io/d/608d07e4b29a09603d12edbd/?utm_source=dbdiagram_embed&utm_medium=bottom_open)
+
+
+
 ## 🚀 Questions and Solutions
 Please [click here](https://github.com/jiaqiyu1/SQL_CaseStudy_DannyMa/blob/main/CaseStudy1_Danny's%20Dinner/Solution_Sql.sql) to see the questions and my solutions ! 
 
