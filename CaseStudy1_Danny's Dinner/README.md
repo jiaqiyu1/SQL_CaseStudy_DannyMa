@@ -1,3 +1,6 @@
+[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/jiaqiyu1)
+[![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/jiaqiyu1?tab=repositories)
+
 # 🍜 Case Study #1 - Danny's Dinner
 <p align="center">
 <img width="289" alt="Screen Shot 2023-05-12 at 3 36 58 PM" src="https://8weeksqlchallenge.com/images/case-study-designs/1.png">
